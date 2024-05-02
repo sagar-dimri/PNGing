@@ -64,8 +64,13 @@ impl Chunk {
 
 impl Display for Chunk {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let ascii_string: String = self.as_bytes().iter().map(|&byte| byte as char).collect();
-        write!(f, "{}", ascii_string)
+        writeln!(f, "Chunk {{",)?;
+        writeln!(f, "  Length: {}", self.length())?;
+        writeln!(f, "  Type: {}", self.chunk_type())?;
+        writeln!(f, "  Data: {} bytes", self.data().len())?;
+        writeln!(f, "  Crc: {}", self.crc())?;
+        writeln!(f, "}}",)?;
+        Ok(())
     }
 }
 
@@ -73,7 +78,6 @@ impl TryFrom<&Vec<u8>> for Chunk {
     type Error = ChunkError;
     
     fn try_from(byte_vec: &Vec<u8>) -> Result<Self, Self::Error> {        
-        dbg!(byte_vec.len());
         match byte_vec.len() < 12 {
             true => Err(ChunkError::InvalidInput),
             false => {
@@ -110,13 +114,12 @@ impl TryFrom<&Vec<u8>> for Chunk {
                                 chunk_data: data_vec,
                                 chunk_checksum: crc
                             }),
-                            false => Err(ChunkError::InvalidCRCReceived),
+                            false => Err(ChunkError::InvalidCrcReceived),
                         }
                     }
                 }
             }
         }
-        
     }
 }
 
@@ -124,7 +127,7 @@ impl TryFrom<&Vec<u8>> for Chunk {
 pub enum ChunkError {
     InvalidInput,
     InvalidLength,
-    InvalidCRCReceived,
+    InvalidCrcReceived,
 }
 
 #[allow(unused_variables)]

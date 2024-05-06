@@ -15,7 +15,7 @@ use crate::{chunk::Chunk, png::Png};
 pub type Error = Box<dyn std::error::Error>;
 pub type Result<T> = std::result::Result<T, Error>;
 
-pub fn get_png_from_file(os_string: OsString) -> Png {
+pub fn get_png_from_file(os_string: &OsString) -> Png {
     let path = PathBuf::from(os_string);
     println!("{}", path.to_str().unwrap());
     let mut file = File::open(path).unwrap();
@@ -27,17 +27,20 @@ pub fn get_png_from_file(os_string: OsString) -> Png {
 }
 
 pub fn execute_encoding(encode_args: Encode){
-    let mut png = get_png_from_file(encode_args.input_file_path);
+    let mut png = get_png_from_file(&encode_args.input_file_path);
     let chunk_containg_msg = Chunk::new(encode_args.chunk_type, encode_args.message.into_bytes());
     png.append_chunk(chunk_containg_msg);
     if let Some(op_path) = encode_args.output_file_path {
         let mut file2 = File::create(PathBuf::from(op_path)).unwrap();
         file2.write_all(&png.as_bytes()).unwrap();
+    }else {
+        let mut file = File::create(PathBuf::from(encode_args.input_file_path)).unwrap();	
+        file.write_all(&png.as_bytes()).unwrap();    
     }
 }
 
 pub fn execute_decoding(decode_args: Decode){
-    let png = get_png_from_file(decode_args.input_file_path);
+    let png = get_png_from_file(&decode_args.input_file_path);
     if let Some(chunk) =  png.chunk_by_type(str::from_utf8(&decode_args.chunk_type.bytes()).unwrap()) {
         println!("hidden message is: \n {}", chunk);
     }else {
@@ -46,12 +49,12 @@ pub fn execute_decoding(decode_args: Decode){
 
 }
 pub fn execute_removing(remove_args: Remove){
-    let mut png = get_png_from_file(remove_args.input_file_path);
+    let mut png = get_png_from_file(&remove_args.input_file_path);
     let removed_chunk = png.remove_chunk(str::from_utf8(&remove_args.chunk_type.bytes()).unwrap()).unwrap();
     println!("removed chunk: {}", removed_chunk);
 }
 pub fn execute_printing(print_args: Print){
-    let png = get_png_from_file(print_args.input_file_path);
+    let png = get_png_from_file(&print_args.input_file_path);
     println!("[PNG]: \n {}", png);
 }
 

@@ -92,9 +92,9 @@ impl Display for Png {
         for ele in self.header {
             write!(f, "{} ", ele)?;
         }
-        write!(f, "]\n")?;
+        write!(f, "]\n\n")?;
         let string_vec: Vec<String> = self.chunks.iter().map(|chunk| {
-            format!("{}\n{}\n{}", '{', chunk, '}')
+            format!("{}", chunk)
         }).collect();
         for s in string_vec {
             writeln!(f, "{}", s)?;

@@ -1,16 +1,10 @@
-mod cli;
-mod chunk;
-mod chunk_type;
-mod commands;
-mod png;
+#![allow(dead_code)]
 use std::str;
 
+mod lib;
+use lib::*;
+
 use std::{ffi::OsString, fs::File, io::{Read, Write}, path::PathBuf};
-
-use commands::Command::{Encd, Decd, Remv, Prnt};
-use cli::{Encode, Decode, Remove, Print};
-
-use crate::{chunk::Chunk, png::Png};
 
 pub type Error = Box<dyn std::error::Error>;
 pub type Result<T> = std::result::Result<T, Error>;
@@ -22,7 +16,7 @@ pub fn get_png_from_file(os_string: &OsString) -> Png {
     let mut contents = Vec::new();
     file.read_to_end(&mut contents).unwrap();
     let contents_slice: &[u8] = &contents;
-    let mut png = Png::try_from(contents_slice).unwrap();
+    let png = Png::try_from(contents_slice).unwrap();
     png
 }
 

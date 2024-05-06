@@ -1,10 +1,11 @@
 extern crate clap;
 
 use clap::{App, AppSettings, SubCommand, Arg};
-use std::{ffi::OsString, str::FromStr};
+use std::ffi::OsString;
+use std::str::FromStr;
 
-use crate::chunk_type::ChunkType;
-use crate::cli::{Encode, Decode, Remove, Print};
+use super::chunk_type::ChunkType;
+use super::cli::{Encode, Decode, Remove, Print};
 
 #[derive(Debug)]
 pub enum Command {

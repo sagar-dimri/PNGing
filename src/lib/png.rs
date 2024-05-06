@@ -1,6 +1,6 @@
 use std::{fmt::Display, io::{BufReader, Read}};
 
-use crate::chunk::Chunk;
+use super::chunk::Chunk;
 
 pub struct Png{
     header: [u8; 8],

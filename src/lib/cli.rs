@@ -1,7 +1,7 @@
 // This file has all the cli commands and underlying sub-commands
 use std::ffi::OsString;
 
-use crate::chunk_type::ChunkType;
+use super::chunk_type::ChunkType;
 
 #[derive(Debug)]
 pub struct Encode {

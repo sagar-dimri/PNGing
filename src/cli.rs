@@ -1,3 +1,4 @@
+// This file has all the cli commands and underlying sub-commands
 use std::ffi::OsString;
 
 use crate::chunk_type::ChunkType;

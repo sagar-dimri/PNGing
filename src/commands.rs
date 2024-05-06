@@ -29,7 +29,7 @@ where
                     .about("This app lets you encode-decode message into/from a PNG file")
                     .setting(AppSettings::SubcommandRequired)
                     .subcommand(SubCommand::with_name("encode")
-                        .about("Encodes a message into a PNG file")
+                        .about("-input_file, -ip, Encodes a message into a PNG file")
                         .arg(
                             Arg::with_name("input_file")
                             .help("Input file name")
@@ -40,7 +40,7 @@ where
                         )
                         .arg(
                             Arg::with_name("chunk_type")
-                            .help("Chunk type of the incoming message")
+                            .help("-chunk_type, -ct, Chunk type of the incoming message")
                             .long("chunk_type")
                             .short("ct")
                             .value_name("CHUNK-TYPE")
@@ -48,7 +48,7 @@ where
                         )
                         .arg(
                             Arg::with_name("message")
-                            .help("Message that is to be encoded")
+                            .help("-msg, -m, Message that is to be encoded")
                             .long("msg")
                             .short("m")
                             .value_name("MESSAGE")
@@ -56,7 +56,7 @@ where
                         )
                         .arg(
                             Arg::with_name("output_file")
-                            .help("Output file name, if ommited nothing is dumped to stdout/file ")
+                            .help("-output_file, -op, Output file name, if ommited nothing is dumped to stdout/file ")
                             .long("output_file")
                             .short("op")
                             .value_name("FILE")
@@ -64,7 +64,7 @@ where
                         )
                     )
                     .subcommand(SubCommand::with_name("decode")
-                        .about("Decodes a message from a PNG file")
+                        .about("-input_file, -ip, Decodes a message from a PNG file")
                         .arg(
                             Arg::with_name("input_file")
                             .help("Input file name")
@@ -75,7 +75,7 @@ where
                         )
                         .arg(
                             Arg::with_name("chunk_type")
-                            .help("Chunk type of the incoming message")
+                            .help("-chunk_type, -ct, Chunk type of the incoming message")
                             .long("chunk_type")
                             .short("ct")
                             .value_name("CHUNK-TYPE")
@@ -83,7 +83,7 @@ where
                         )
                     )
                     .subcommand(SubCommand::with_name("remove")
-                        .about("Removes message from a PNG file, if provided with a valid chunk-type")
+                        .about("-input_file, -ip, Removes message from a PNG file, if provided with a valid chunk-type")
                         .arg(
                             Arg::with_name("input_file")
                             .help("Input file name")
@@ -94,7 +94,7 @@ where
                         )
                         .arg(
                             Arg::with_name("chunk_type")
-                            .help("Chunk type of the incoming message")
+                            .help("-chunk_type, -ct, Chunk type of the incoming message")
                             .long("chunk_type")
                             .short("ct")
                             .value_name("CHUNK-TYPE")
@@ -102,7 +102,7 @@ where
                         )
                     )
                     .subcommand(SubCommand::with_name("print")
-                        .about("Prints the PNG in a readable format")
+                        .about("-input_file, -ip, Prints the PNG in a readable format")
                         .arg(
                             Arg::with_name("input_file")
                             .help("Input file name")
